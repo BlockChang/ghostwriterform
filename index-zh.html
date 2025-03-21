@@ -270,6 +270,21 @@
 <div style="text-align: center; margin-bottom: 10px;">
 <img alt="GhostWriter Logo" src="ghostwriter_logo.png" style="max-width: 250px;"/>
 </div>
+<script>
+  const binaryText = "01000111 01101000 01101111 01110011 01110100 01010111 01110010 01101001 01110100 01100101 01110010";
+  let index = 0;
+  function animateBinary() {
+    const target = document.getElementById('binaryTitle');
+    if (index <= binaryText.length) {
+      target.textContent = binaryText.slice(0, index++);
+      setTimeout(animateBinary, 30);
+    }
+  }
+  window.onload = () => {
+    animateBinary();
+    updateSubjectList();
+  };
+</script>
 <p>学术写作服务 | 作业和考试帮助 | 100% 保密</p>
 <div class="lang-selector">
 <label for="lang">🌐</label>
@@ -356,6 +371,7 @@
 <div class="order-code" id="orderCode"></div>
 </form>
 </main>
+
 <canvas id="matrixCanvas"></canvas>
 <audio id="fx" preload="auto" src="https://www.soundjay.com/button/beep-07.wav"></audio>
 <script>
@@ -419,59 +435,35 @@ function handleFormSubmit(e) {
   e.preventDefault();
   const orderId = generateOrderID();
 
-  fetch('https://script.google.com/macros/s/AKfycbyq5yXIoLBypK6Sl1JAa_yExJfkJVm7y5gtsXS-LNlZ0IOXDzAleu6DAywa74AcpPlcIQ/exec', {
-    method: 'POST',
+  const payload = {
+    orderId,
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    level: document.getElementById("level").value,
+    subject: document.getElementById("subject").value,
+    service: document.getElementById("service").value,
+    deadline: document.getElementById("deadline").value,
+    details: document.getElementById("notes").value,
+    addons: Array.from(document.querySelectorAll("input[name='addons']:checked")).map(cb => cb.value)
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbyq5yXIoLBypK6Sl1JAa_yExJfkJVm7y5gtsXS-LNlZ0IOXDzAleu6DAywa74AcpPlcIQ/exec", {
+    method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      orderId,
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      level: document.getElementById("level").value,
-      subject: document.getElementById("subject").value,
-      service: document.getElementById("service").value,
-      deadline: document.getElementById("deadline").value,
-      details: document.getElementById("notes").value,
-      addons: Array.from(document.querySelectorAll("input[name='addons']:checked")).map(cb => cb.value)
-    })
+    body: JSON.stringify(payload)
+  }).then(res => res.text()).then(response => {
+    console.log("✅ Google Sheets response:", response);
+    document.getElementById("orderCode").innerHTML = `
+      ✅ Order Submitted!<br>
+      Your Order ID is <strong>${orderId}</strong><br>
+      We'll contact you shortly via email or Telegram.
+    `;
+  }).catch(error => {
+    console.error("❌ Submission error:", error);
+    document.getElementById("orderCode").innerText = "❌ Failed to submit your order. Please try again.";
   });
-
-  document.getElementById("orderCode").innerHTML = `
-    ✅ Order Submitted!<br>
-    Your Order ID is <strong>${orderId}</strong><br>
-    We'll contact you shortly via email or Telegram.
-  `;
-}
-</script>
-<script>
-function updateSubjectList() {
-  const level = document.getElementById("level").value;
-  const subjectSelect = document.getElementById("subject");
-  const subjectsByLevel = {
-    "Elementary": ["Math", "Science", "English", "Civics", "Art", "Music", "PE", "ICT", "Moral Education", "Other"],
-    "Secondary High School": ["Algebra", "Geometry", "Biology", "Physics", "Chemistry", "History", "Geography", "Economics", "English Lit", "Programming", "Other"],
-    "High School": ["Advanced Math", "Calculus", "Statistics", "Literature", "Psychology", "Philosophy", "Computer Science", "Foreign Languages", "Environmental Science", "Other"],
-    "Undergraduate": ["Accounting", "Finance", "Marketing", "International Relations", "Law", "Mechanical Engineering", "Civil Engineering", "Biomedical Science", "Sociology", "Education", "Design", "Architecture", "Other"],
-    "Master's": ["MBA", "Public Administration", "Data Science", "Clinical Psychology", "Linguistics", "Theology", "Urban Planning", "AI & Robotics", "Other"],
-    "PhD": ["Theoretical Physics", "Cognitive Neuroscience", "Sustainability", "Bioinformatics", "Political Philosophy", "Comparative Literature", "Cryptography", "Genetics", "Other"]
-  };
-  subjectSelect.innerHTML = "";
-  if (subjectsByLevel[level]) {
-    subjectsByLevel[level].forEach(sub => {
-      const opt = document.createElement("option");
-      opt.value = sub;
-      opt.textContent = sub;
-      subjectSelect.appendChild(opt);
-    });
-  }
-}
-</script>
-<script>
-function toggleServiceOptions() {
-  const service = document.getElementById("service").value;
-  document.getElementById("assignmentOptions").style.display = service === "Assignment" ? "block" : "none";
-  document.getElementById("examOptions").style.display = service === "Exam" ? "block" : "none";
 }
 </script>
 </body>
