@@ -268,9 +268,8 @@
 <body>
 <header>
 <div style="text-align: center; margin-bottom: 10px;">
-  <img src="ghostwriter_logo.png" alt="GhostWriter Logo" style="max-width: 250px;">
+<img alt="GhostWriter Logo" src="ghostwriter_logo.png" style="max-width: 250px;"/>
 </div>
-
 <script>
   const binaryText = "01000111 01101000 01101111 01110011 01110100 01010111 01110010 01101001 01110100 01100101 01110010";
   let index = 0;
@@ -290,8 +289,6 @@
 <div class="lang-selector">
 <label for="lang">🌐</label>
 <select id="lang" onchange="changeLanguage(this.value)"><option value="en">EN</option><option value="id">ID</option><option selected="selected" value="zh">中</option></select>
-
-
 </div>
 </header>
 <main>
@@ -374,67 +371,7 @@
 <div class="order-code" id="orderCode"></div>
 </form>
 </main>
-<script>
-function generateOrderID() {
-  const date = new Date();
-  const prefix = "GW-" + date.getFullYear().toString().slice(-2) +
-                 (date.getMonth() + 1).toString().padStart(2, '0') +
-                 date.getDate().toString().padStart(2, '0');
-  const random = Math.random().toString(36).substr(2, 5).toUpperCase();
-  return `${prefix}-${random}`;
-}
-function handleFormSubmit(fetch('https://script.google.com/macros/s/AKfycbzC5V6djhbXEzoD5G_JDBrKXcE0fO4nyNrsOm6AH67Qirz-ZP7mt3qK17QEPD-NAA/exec ', {
-  method: 'POST',
-  body: JSON.stringify({
-    orderId,
-    name: document.getElementById("name").value,
-    email: document.getElementById("email").value,
-    level: document.getElementById("level").value,
-    subject: document.getElementById("subject").value,
-    service: document.getElementById("service").value,
-    deadline: document.getElementById("deadline").value,
-    details: document.getElementById("notes").value,
-    addons: Array.from(document.querySelectorAll("input[name='addons']:checked")).map(cb => cb.value)
-  }),
-  headers: {
-    "Content-Type": "application/json"
-  }
-});) {
-  e.preventDefault();
-  const orderID = generateOrderID();
-  document.getElementById("orderCode").innerHTML = `✅ Order Submitted!<br>Your Order ID is <strong>${orderID}</strong><br>We'll contact you shortly via email or Telegram.`;
-}
-function updateSubjectList() {
-  const level = document.getElementById("level").value;
-  const subjectSelect = document.getElementById("subject");
-  const subjectsByLevel = {
-    "Elementary": ["Math", "Science", "English", "Civics", "Art"],
-    "Secondary High School": ["Math", "Biology", "History", "Civics", "Geography"],
-    "High School": ["Physics", "Economics", "Math", "Chemistry"],
-    "Undergraduate": ["Law", "Engineering", "Business", "Computer Science"],
-    "Master's": ["Public Policy", "Data Science", "MBA"],
-    "PhD": ["Neuroscience", "AI", "Political Science"]
-  };
-  subjectSelect.innerHTML = "";
-  if (subjectsByLevel[level]) {
-    subjectsByLevel[level].forEach(sub => {
-      const opt = document.createElement("option");
-      opt.value = sub;
-      opt.textContent = sub;
-      subjectSelect.appendChild(opt);
-    });
-  }
-}
-function toggleServiceOptions() {
-  const service = document.getElementById("service").value;
-  document.getElementById("assignmentOptions").style.display = service === "Assignment" ? 'block' : 'none';
-  document.getElementById("examOptions").style.display = service === "Exam" ? 'block' : 'none';
-}
-function changeLanguage(lang) {
-  alert("Language switcher is a placeholder.");
-}
-window.onload = updateSubjectList;
-</script>
+
 <canvas id="matrixCanvas"></canvas>
 <audio id="fx" preload="auto" src="https://www.soundjay.com/button/beep-07.wav"></audio>
 <script>
@@ -483,5 +420,45 @@ window.onload = updateSubjectList;
       if (lang === 'id') window.location.href = 'index-id.html';
       if (lang === 'zh') window.location.href = 'index-zh.html';
     }
-    </script></body>
+    </script>
+<script>
+function generateOrderID() {
+  const date = new Date();
+  const prefix = "GW-" + date.getFullYear().toString().slice(-2) +
+                 (date.getMonth() + 1).toString().padStart(2, '0') +
+                 date.getDate().toString().padStart(2, '0');
+  const random = Math.random().toString(36).substr(2, 5).toUpperCase();
+  return `${prefix}-${random}`;
+}
+
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const orderId = generateOrderID();
+
+  fetch('https://script.google.com/macros/s/AKfycbzC5V6djhbXEzoD5G_JDBrKXcE0fO4nyNrsOm6AH67Qirz-ZP7mt3qK17QEPD-NAA/exec', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      orderId,
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      level: document.getElementById("level").value,
+      subject: document.getElementById("subject").value,
+      service: document.getElementById("service").value,
+      deadline: document.getElementById("deadline").value,
+      details: document.getElementById("notes").value,
+      addons: Array.from(document.querySelectorAll("input[name='addons']:checked")).map(cb => cb.value)
+    })
+  });
+
+  document.getElementById("orderCode").innerHTML = `
+    ✅ Order Submitted!<br>
+    Your Order ID is <strong>${orderId}</strong><br>
+    We'll contact you shortly via email or Telegram.
+  `;
+}
+</script>
+</body>
 </html>
