@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta charset="UTF-8">
+  <title>GhostWriter - Submit Order</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #111827;
+      color: #38bdf8;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #2e2e2e;
+      position: relative;
+    }
+    header h1 {
+      font-size: 32px;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    header p {
+      font-size: 16px;
+      color: #94a3b8;
+    }
+    .lang-selector {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #1e1e1e;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+      border: 1px solid #2a2a2a;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+    small {
+      color: #a1a1aa;
+      display: block;
+      margin-top: 3px;
+      margin-bottom: 5px;
+      font-size: 13px;
+    }
+    select, input[type="number"], input[type="text"], input[type="email"], input[type="datetime-local"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: none;
+      background-color: #2a2a2a;
+      color: #f8fafc;
+    }
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      font-weight: normal;
+      margin-top: 10px;
+    }
+    .checkbox-group input {
+      margin-right: 10px;
+    }
+    .order-code {
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #0f172a;
+      border-radius: 10px;
+      font-size: 18px;
+      color: #38bdf8;
+      text-align: center;
+    }
+    button {
+      margin-top: 25px;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #38bdf8;
+      color: #0f0f0f;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #0ea5e9;
+    }
+    .step {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed #334155;
+    }
+  </style>
+
+    <style>
+      #matrixCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: black;
+      }
+      #loadingScreen {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: #000;
+        color: #0f0;
+        font-family: monospace;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+    </style>
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const loading = document.createElement('div');
+        loading.id = 'loadingScreen';
+        loading.innerHTML = '<span>booting GhostWriter system... ███▒▒▒</span>';
+        document.body.appendChild(loading);
+        setTimeout(() => {
+          loading.remove();
+        }, 2500);
+      });
+    </script>
+    
+<style>
+  body {
+    font-size: 14px;
+    overflow-x: hidden;
+  }
+  main {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+  }
+  .step {
+    padding-bottom: 15px;
+  }
+</style>
+</head>
+    
+<body>
+<header>
+  
+<div style="text-align:center; margin-bottom: 10px;">
+  <pre id="binaryTitle" style="font-family: monospace; font-size: 14px; color: #38bdf8; white-space: pre-wrap;"></pre>
+  <h1 style="margin-top: -10px; font-size: 36px; letter-spacing: 2px; color: #38bdf8;">GhostWriter</h1>
+</div>
+<script>
+  const binaryText = "01000111 01101000 01101111 01110011 01110100 01010111 01110010 01101001 01110100 01100101 01110010";
+  let index = 0;
+  function animateBinary() {
+    const target = document.getElementById('binaryTitle');
+    if (index <= binaryText.length) {
+      target.textContent = binaryText.slice(0, index++);
+      setTimeout(animateBinary, 30);
+    }
+  }
+  window.onload = () => {
+    animateBinary();
+    updateSubjectList();
+  };
+</script>
+
+  <p>Academic Order Submission Form</p>
+  <div class="lang-selector">
+    <label for="lang">🌐</label>
+    <select id="lang" onchange="changeLanguage(this.value)">
+      <option value="en">EN</option>
+      <option value="id">ID</option>
+      <option value="zh">中</option>
+    </select>
+  </div>
+</header>
+<main>
+  <form id="orderForm" onsubmit="handleFormSubmit(event)">
+    <div class="step">
+      <h3>📚 Step 1: Subject & Level</h3>
+      <label for="deadline">Deadline</label>
+      <input type="datetime-local" id="deadline" required>
+      <small>Please select the exact deadline (GMT+7 will be assumed).</small>
+      <label for="level">Academic Level</label>
+      <select id="level" onchange="updateSubjectList()" required>
+        <option value="">-- Select --</option>
+        <option value="Elementary">Elementary</option>
+        <option value="Secondary High School">Secondary High School</option>
+        <option value="High School">High School</option>
+        <option value="Undergraduate">Undergraduate</option>
+        <option value="Master's">Master's</option>
+        <option value="PhD">PhD</option>
+      </select>
+      <label for="subject">Subject / Major</label>
+      <select id="subject" required></select>
+    </div>
+
+    <div class="step">
+      <h3>🎯 Step 2: What do you need help with?</h3>
+      <label for="service">Type of Service</label>
+      <select id="service" onchange="toggleServiceOptions()" required>
+        <option value="">-- Select --</option>
+        <option value="Assignment">Assignment</option>
+        <option value="Exam">Exam / Quiz</option>
+        <option value="Tutoring">Private Online Teaching Session</option>
+      </select>
+    </div>
+
+    <div id="assignmentOptions" class="step" style="display: none;">
+      <h3>📄 Step 3: Assignment Details</h3>
+      <label for="wordCount">Word Count</label>
+      <input type="number" id="wordCount" value="1000">
+      <label for="complexity">Subject Complexity</label>
+      <select id="complexity">
+        <option value="">-- Select --</option>
+        <option value="General">General</option>
+        <option value="Technical">Technical</option>
+        <option value="Niche / Specialized">Niche / Specialized</option>
+      </select>
+      <label>Add-ons</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="addons" value="Plagiarism Report"> Plagiarism Report</label>
+        <label><input type="checkbox" name="addons" value="Formatting / Citation"> Formatting / Citation</label>
+        <label><input type="checkbox" name="addons" value="Graphs / Charts"> Graphs / Charts</label>
+        <label><input type="checkbox" name="addons" value="PowerPoint Presentation"> PowerPoint Slides</label>
+        <label><input type="checkbox" name="addons" value="Turnitin Check"> Turnitin Screenshot</label>
+        <label><input type="checkbox" name="addons" value="Voice Explanation"> Voice Explanation (MP3)</label>
+        <label><input type="checkbox" name="addons" value="Live Chat Support"> Live Q&A Session</label>
+      </div>
+    </div>
+
+    <div id="examOptions" class="step" style="display: none;">
+      <h3>🧪 Step 3: Exam Details</h3>
+      <label for="examType">Exam Type</label>
+      <select id="examType">
+        <option value="">-- Select --</option>
+        <option value="MCQ">Multiple Choice</option>
+        <option value="Essay">Essay-Based</option>
+        <option value="Problem Solving">Problem-Solving</option>
+        <option value="Final">Midterm / Final</option>
+      </select>
+      <label for="duration">Exam Duration (in minutes)</label>
+      <input type="number" id="duration" placeholder="e.g. 90">
+      <label for="platform">Exam Platform / System</label>
+      <input type="text" id="platform" placeholder="e.g. Moodle, Blackboard">
+    </div>
+
+    <div class="step">
+      <h3>👤 Step 4: Contact Info</h3>
+      <label for="name">Your Name</label>
+      <input type="text" id="name" required>
+      <label for="email">Email / Telegram</label>
+      <input type="text" id="email" required>
+      <label for="notes">Additional Notes</label>
+      <input type="text" id="notes">
+    </div>
+
+    <button type="submit">✅ Submit Order</button>
+    <div class="order-code" id="orderCode"></div>
+  </form>
+</main>
+<script>
+function generateOrderID() {
+  const date = new Date();
+  const prefix = "GW-" + date.getFullYear().toString().slice(-2) +
+                 (date.getMonth() + 1).toString().padStart(2, '0') +
+                 date.getDate().toString().padStart(2, '0');
+  const random = Math.random().toString(36).substr(2, 5).toUpperCase();
+  return `${prefix}-${random}`;
+}
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const orderID = generateOrderID();
+  document.getElementById("orderCode").innerHTML = `✅ Order Submitted!<br>Your Order ID is <strong>${orderID}</strong><br>We'll contact you shortly via email or Telegram.`;
+}
+function updateSubjectList() {
+  const level = document.getElementById("level").value;
+  const subjectSelect = document.getElementById("subject");
+  const subjectsByLevel = {
+    "Elementary": ["Math", "Science", "English", "Civics", "Art"],
+    "Secondary High School": ["Math", "Biology", "History", "Civics", "Geography"],
+    "High School": ["Physics", "Economics", "Math", "Chemistry"],
+    "Undergraduate": ["Law", "Engineering", "Business", "Computer Science"],
+    "Master's": ["Public Policy", "Data Science", "MBA"],
+    "PhD": ["Neuroscience", "AI", "Political Science"]
+  };
+  subjectSelect.innerHTML = "";
+  if (subjectsByLevel[level]) {
+    subjectsByLevel[level].forEach(sub => {
+      const opt = document.createElement("option");
+      opt.value = sub;
+      opt.textContent = sub;
+      subjectSelect.appendChild(opt);
+    });
+  }
+}
+function toggleServiceOptions() {
+  const service = document.getElementById("service").value;
+  document.getElementById("assignmentOptions").style.display = service === "Assignment" ? 'block' : 'none';
+  document.getElementById("examOptions").style.display = service === "Exam" ? 'block' : 'none';
+}
+function changeLanguage(lang) {
+  alert("Language switcher is a placeholder.");
+}
+window.onload = updateSubjectList;
+</script>
+
+<canvas id="matrixCanvas"></canvas>
+<audio id="fx" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+<script>
+  // Matrix animation
+  const canvas = document.getElementById('matrixCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const binary = '01';
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
+  const drops = Array(Math.floor(columns)).fill(1);
+
+  function drawMatrix() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#0f0';
+    ctx.font = fontSize + 'px monospace';
+    for (let i = 0; i < drops.length; i++) {
+      const text = binary[Math.floor(Math.random() * binary.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      drops[i]++;
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+    }
+  }
+  setInterval(drawMatrix, 40);
+
+  // Sound FX
+  document.addEventListener('click', () => {
+    const fx = document.getElementById('fx');
+    if (fx) fx.play();
+  }, { once: true });
+</script>
+</body>
+
+</html>
