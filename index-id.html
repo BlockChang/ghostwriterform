@@ -270,21 +270,7 @@
 <div style="text-align: center; margin-bottom: 10px;">
 <img alt="GhostWriter Logo" src="ghostwriter_logo.png" style="max-width: 250px;"/>
 </div>
-<script>
-  const binaryText = "01000111 01101000 01101111 01110011 01110100 01010111 01110010 01101001 01110100 01100101 01110010";
-  let index = 0;
-  function animateBinary() {
-    const target = document.getElementById('binaryTitle');
-    if (index <= binaryText.length) {
-      target.textContent = binaryText.slice(0, index++);
-      setTimeout(animateBinary, 30);
-    }
-  }
-  window.onload = () => {
-    animateBinary();
-    updateSubjectList();
-  };
-</script>
+
 <p>Layanan penulisan akademis | Bantuan Tugas dan Ujian | 100% Rahasia</p>
 <div class="lang-selector">
 <label for="lang">🌐</label>
@@ -460,17 +446,18 @@ function handleFormSubmit(e) {
 }
 </script>
 
+
 <script>
 function updateSubjectList() {
   const level = document.getElementById("level").value;
   const subjectSelect = document.getElementById("subject");
   const subjectsByLevel = {
-    "Elementary": ["Math", "Science", "English", "Civics", "Art"],
-    "Secondary High School": ["Math", "Biology", "History", "Civics", "Geography"],
-    "High School": ["Physics", "Economics", "Math", "Chemistry"],
-    "Undergraduate": ["Law", "Engineering", "Business", "Computer Science"],
-    "Master's": ["Public Policy", "Data Science", "MBA"],
-    "PhD": ["Neuroscience", "AI", "Political Science"]
+    "Elementary": ["Math", "Science", "English", "Civics", "Art", "Music", "PE", "ICT", "Moral Education", "Other"],
+    "Secondary High School": ["Algebra", "Geometry", "Biology", "Physics", "Chemistry", "History", "Geography", "Economics", "English Lit", "Programming", "Other"],
+    "High School": ["Advanced Math", "Calculus", "Statistics", "Literature", "Psychology", "Philosophy", "Computer Science", "Foreign Languages", "Environmental Science", "Other"],
+    "Undergraduate": ["Accounting", "Finance", "Marketing", "International Relations", "Law", "Mechanical Engineering", "Civil Engineering", "Biomedical Science", "Sociology", "Education", "Design", "Architecture", "Other"],
+    "Master's": ["MBA", "Public Administration", "Data Science", "Clinical Psychology", "Linguistics", "Theology", "Urban Planning", "AI & Robotics", "Other"],
+    "PhD": ["Theoretical Physics", "Cognitive Neuroscience", "Sustainability", "Bioinformatics", "Political Philosophy", "Comparative Literature", "Cryptography", "Genetics", "Other"]
   };
   subjectSelect.innerHTML = "";
   if (subjectsByLevel[level]) {
@@ -481,6 +468,14 @@ function updateSubjectList() {
       subjectSelect.appendChild(opt);
     });
   }
+}
+</script>
+
+<script>
+function toggleServiceOptions() {
+  const service = document.getElementById("service").value;
+  document.getElementById("assignmentOptions").style.display = service === "Assignment" ? "block" : "none";
+  document.getElementById("examOptions").style.display = service === "Exam" ? "block" : "none";
 }
 </script>
 </body>
