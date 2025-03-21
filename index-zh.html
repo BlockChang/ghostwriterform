@@ -1,12 +1,12 @@
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <meta charset="UTF-8">
-  <title>GhostWriter - Submit Order</title>
-  <style>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"/>
+<meta charset="utf-8"/>
+<title>GhostWriter - Submit Order</title>
+<style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
@@ -105,8 +105,7 @@
       border-bottom: 1px dashed #334155;
     }
   </style>
-
-    <style>
+<style>
       #matrixCanvas {
         position: fixed;
         top: 0;
@@ -130,7 +129,7 @@
         z-index: 9999;
       }
     </style>
-    <script>
+<script>
       window.addEventListener('DOMContentLoaded', () => {
         const loading = document.createElement('div');
         loading.id = 'loadingScreen';
@@ -141,7 +140,6 @@
         }, 2500);
       });
     </script>
-    
 <style>
   body {
     font-size: 14px;
@@ -165,7 +163,6 @@
     padding-bottom: 15px;
   }
 </style>
-
 <script>
   const translations = {
     "en": {
@@ -268,13 +265,11 @@
   }
 </script>
 </head>
-    
 <body>
 <header>
-  
 <div style="text-align:center; margin-bottom: 10px;">
-  <pre id="binaryTitle" style="font-family: monospace; font-size: 14px; color: #38bdf8; white-space: pre-wrap;"></pre>
-  <h1 style="margin-top: -10px; font-size: 36px; letter-spacing: 2px; color: #38bdf8;">GhostWriter</h1>
+<pre id="binaryTitle" style="font-family: monospace; font-size: 14px; color: #38bdf8; white-space: pre-wrap;"></pre>
+<h1 style="margin-top: -10px; font-size: 36px; letter-spacing: 2px; color: #38bdf8;">GhostWriter</h1>
 </div>
 <script>
   const binaryText = "01000111 01101000 01101111 01110011 01110100 01010111 01110010 01101001 01110100 01100101 01110010";
@@ -291,105 +286,95 @@
     updateSubjectList();
   };
 </script>
+<p>Academic Order Submission Form</p>
+<div class="lang-selector">
+<label for="lang">🌐</label>
+<select id="lang" onchange="changeLanguage(this.value)"><option value="en">EN</option><option value="id">ID</option><option selected="selected" value="zh">中</option></select>
+<option value="en">EN</option>
+<option value="id">ID</option>
+<option value="zh">中</option>
 
-  <p>Academic Order Submission Form</p>
-  <div class="lang-selector">
-    <label for="lang">🌐</label>
-    <select id="lang" onchange="changeLanguage(this.value)">
-      <option value="en" selected>EN</option>
-      <option value="id" >ID</option>
-      <option value="zh" >中</option>
-    </select>
-      <option value="en">EN</option>
-      <option value="id">ID</option>
-      <option value="zh">中</option>
-    </select>
-  </div>
+</div>
 </header>
 <main>
-  <form id="orderForm" onsubmit="handleFormSubmit(event)">
-    <div class="step">
-      <h3>📚 第1步: 科目和学术级别</h3>
-      <label for="deadline">截止日期</label>
-      <input type="datetime-local" id="deadline" required>
-      <small>请选择确切的截止时间（默认为 GMT+7）。</small>
-      <label for="level">学术级别</label>
-      <select id="level" onchange="updateSubjectList()" required>
-        <option value="">-- Select --</option>
-        <option value="Elementary">Elementary</option>
-        <option value="Secondary High School">Secondary High School</option>
-        <option value="High School">High School</option>
-        <option value="Undergraduate">Undergraduate</option>
-        <option value="Master's">Master's</option>
-        <option value="PhD">PhD</option>
-      </select>
-      <label for="subject">科目 / 专业</label>
-      <select id="subject" required></select>
-    </div>
-
-    <div class="step">
-      <h3>🎯 第2步: 需要什么帮助？</h3>
-      <label for="service">服务类型</label>
-      <select id="service" onchange="toggleServiceOptions()" required>
-        <option value="">-- Select --</option>
-        <option value="Assignment">Assignment</option>
-        <option value="Exam">Exam / Quiz</option>
-        <option value="Tutoring">Private Online Teaching Session</option>
-      </select>
-    </div>
-
-    <div id="assignmentOptions" class="step" style="display: none;">
-      <h3>📄 第3步: 作业详情</h3>
-      <label for="wordCount">字数</label>
-      <input type="number" id="wordCount" value="1000">
-      <label for="complexity">学科难度</label>
-      <select id="complexity">
-        <option value="">-- Select --</option>
-        <option value="General">General</option>
-        <option value="Technical">Technical</option>
-        <option value="Niche / Specialized">Niche / Specialized</option>
-      </select>
-      <label>附加功能</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="addons" value="Plagiarism Report"> Plagiarism Report</label>
-        <label><input type="checkbox" name="addons" value="Formatting / Citation"> Formatting / Citation</label>
-        <label><input type="checkbox" name="addons" value="Graphs / Charts"> Graphs / Charts</label>
-        <label><input type="checkbox" name="addons" value="PowerPoint Presentation"> PowerPoint Slides</label>
-        <label><input type="checkbox" name="addons" value="Turnitin Check"> Turnitin Screenshot</label>
-        <label><input type="checkbox" name="addons" value="Voice Explanation"> Voice Explanation (MP3)</label>
-        <label><input type="checkbox" name="addons" value="Live Chat Support"> Live Q&A Session</label>
-      </div>
-    </div>
-
-    <div id="examOptions" class="step" style="display: none;">
-      <h3>🧪 第3步: 考试详情</h3>
-      <label for="examType">考试类型</label>
-      <select id="examType">
-        <option value="">-- Select --</option>
-        <option value="MCQ">Multiple Choice</option>
-        <option value="Essay">Essay-Based</option>
-        <option value="Problem Solving">Problem-Solving</option>
-        <option value="Final">Midterm / Final</option>
-      </select>
-      <label for="duration">考试时长（分钟）</label>
-      <input type="number" id="duration" placeholder="e.g. 90">
-      <label for="platform">考试平台 / 系统</label>
-      <input type="text" id="platform" placeholder="e.g. Moodle, Blackboard">
-    </div>
-
-    <div class="step">
-      <h3>👤 第4步: 联系方式</h3>
-      <label for="name">您的姓名</label>
-      <input type="text" id="name" required>
-      <label for="email">电子邮件 / Telegram</label>
-      <input type="text" id="email" required>
-      <label for="notes">附加说明</label>
-      <input type="text" id="notes">
-    </div>
-
-    <button type="submit">✅ 提交订单</button>
-    <div class="order-code" id="orderCode"></div>
-  </form>
+<form id="orderForm" onsubmit="handleFormSubmit(event)">
+<div class="step">
+<h3>📚 第1步: 科目和学术级别</h3>
+<label for="deadline">截止日期</label>
+<input id="deadline" required="" type="datetime-local"/>
+<small>请选择确切的截止时间（默认为 GMT+7）。</small>
+<label for="level">学术级别</label>
+<select id="level" onchange="updateSubjectList()" required="">
+<option value="">-- Select --</option>
+<option value="Elementary">Elementary</option>
+<option value="Secondary High School">Secondary High School</option>
+<option value="High School">High School</option>
+<option value="Undergraduate">Undergraduate</option>
+<option value="Master's">Master's</option>
+<option value="PhD">PhD</option>
+</select>
+<label for="subject">科目 / 专业</label>
+<select id="subject" required=""></select>
+</div>
+<div class="step">
+<h3>🎯 第2步: 需要什么帮助？</h3>
+<label for="service">服务类型</label>
+<select id="service" onchange="toggleServiceOptions()" required="">
+<option value="">-- Select --</option>
+<option value="Assignment">Assignment</option>
+<option value="Exam">Exam / Quiz</option>
+<option value="Tutoring">Private Online Teaching Session</option>
+</select>
+</div>
+<div class="step" id="assignmentOptions" style="display: none;">
+<h3>📄 第3步: 作业详情</h3>
+<label for="wordCount">字数</label>
+<input id="wordCount" type="number" value="1000"/>
+<label for="complexity">学科难度</label>
+<select id="complexity">
+<option value="">-- Select --</option>
+<option value="General">General</option>
+<option value="Technical">Technical</option>
+<option value="Niche / Specialized">Niche / Specialized</option>
+</select>
+<label>附加功能</label>
+<div class="checkbox-group">
+<label><input name="addons" type="checkbox" value="Plagiarism Report"/> Plagiarism Report</label>
+<label><input name="addons" type="checkbox" value="Formatting / Citation"/> Formatting / Citation</label>
+<label><input name="addons" type="checkbox" value="Graphs / Charts"/> Graphs / Charts</label>
+<label><input name="addons" type="checkbox" value="PowerPoint Presentation"/> PowerPoint Slides</label>
+<label><input name="addons" type="checkbox" value="Turnitin Check"/> Turnitin Screenshot</label>
+<label><input name="addons" type="checkbox" value="Voice Explanation"/> Voice Explanation (MP3)</label>
+<label><input name="addons" type="checkbox" value="Live Chat Support"/> Live Q&amp;A Session</label>
+</div>
+</div>
+<div class="step" id="examOptions" style="display: none;">
+<h3>🧪 第3步: 考试详情</h3>
+<label for="examType">考试类型</label>
+<select id="examType">
+<option value="">-- Select --</option>
+<option value="MCQ">Multiple Choice</option>
+<option value="Essay">Essay-Based</option>
+<option value="Problem Solving">Problem-Solving</option>
+<option value="Final">Midterm / Final</option>
+</select>
+<label for="duration">考试时长（分钟）</label>
+<input id="duration" placeholder="e.g. 90" type="number"/>
+<label for="platform">考试平台 / 系统</label>
+<input id="platform" placeholder="e.g. Moodle, Blackboard" type="text"/>
+</div>
+<div class="step">
+<h3>👤 第4步: 联系方式</h3>
+<label for="name">您的姓名</label>
+<input id="name" required="" type="text"/>
+<label for="email">电子邮件 / Telegram</label>
+<input id="email" required="" type="text"/>
+<label for="notes">附加说明</label>
+<input id="notes" type="text"/>
+</div>
+<button type="submit">✅ 提交订单</button>
+<div class="order-code" id="orderCode"></div>
+</form>
 </main>
 <script>
 function generateOrderID() {
@@ -436,9 +421,8 @@ function changeLanguage(lang) {
 }
 window.onload = updateSubjectList;
 </script>
-
 <canvas id="matrixCanvas"></canvas>
-<audio id="fx" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+<audio id="fx" preload="auto" src="https://www.soundjay.com/button/beep-07.wav"></audio>
 <script>
   // Matrix animation
   const canvas = document.getElementById('matrixCanvas');
@@ -472,7 +456,6 @@ window.onload = updateSubjectList;
     if (fx) fx.play();
   }, { once: true });
 </script>
-
 <script>
   function changeLanguage(lang) {
     if (lang === 'en') window.location.href = 'index.html';
@@ -480,6 +463,11 @@ window.onload = updateSubjectList;
     if (lang === 'zh') window.location.href = 'index-zh.html';
   }
 </script>
-</body>
-
+<script>
+    function changeLanguage(lang) {
+      if (lang === 'en') window.location.href = 'index.html';
+      if (lang === 'id') window.location.href = 'index-id.html';
+      if (lang === 'zh') window.location.href = 'index-zh.html';
+    }
+    </script></body>
 </html>
