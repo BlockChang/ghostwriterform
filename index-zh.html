@@ -371,7 +371,6 @@
 <div class="order-code" id="orderCode"></div>
 </form>
 </main>
-
 <canvas id="matrixCanvas"></canvas>
 <audio id="fx" preload="auto" src="https://www.soundjay.com/button/beep-07.wav"></audio>
 <script>
@@ -458,6 +457,30 @@ function handleFormSubmit(e) {
     Your Order ID is <strong>${orderId}</strong><br>
     We'll contact you shortly via email or Telegram.
   `;
+}
+</script>
+
+<script>
+function updateSubjectList() {
+  const level = document.getElementById("level").value;
+  const subjectSelect = document.getElementById("subject");
+  const subjectsByLevel = {
+    "Elementary": ["Math", "Science", "English", "Civics", "Art"],
+    "Secondary High School": ["Math", "Biology", "History", "Civics", "Geography"],
+    "High School": ["Physics", "Economics", "Math", "Chemistry"],
+    "Undergraduate": ["Law", "Engineering", "Business", "Computer Science"],
+    "Master's": ["Public Policy", "Data Science", "MBA"],
+    "PhD": ["Neuroscience", "AI", "Political Science"]
+  };
+  subjectSelect.innerHTML = "";
+  if (subjectsByLevel[level]) {
+    subjectsByLevel[level].forEach(sub => {
+      const opt = document.createElement("option");
+      opt.value = sub;
+      opt.textContent = sub;
+      subjectSelect.appendChild(opt);
+    });
+  }
 }
 </script>
 </body>
