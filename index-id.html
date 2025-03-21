@@ -383,7 +383,23 @@ function generateOrderID() {
   const random = Math.random().toString(36).substr(2, 5).toUpperCase();
   return `${prefix}-${random}`;
 }
-function handleFormSubmit(e) {
+function handleFormSubmit(fetch('https://script.google.com/macros/s/AKfycbzC5V6djhbXEzoD5G_JDBrKXcE0fO4nyNrsOm6AH67Qirz-ZP7mt3qK17QEPD-NAA/exec ', {
+  method: 'POST',
+  body: JSON.stringify({
+    orderId,
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    level: document.getElementById("level").value,
+    subject: document.getElementById("subject").value,
+    service: document.getElementById("service").value,
+    deadline: document.getElementById("deadline").value,
+    details: document.getElementById("notes").value,
+    addons: Array.from(document.querySelectorAll("input[name='addons']:checked")).map(cb => cb.value)
+  }),
+  headers: {
+    "Content-Type": "application/json"
+  }
+});) {
   e.preventDefault();
   const orderID = generateOrderID();
   document.getElementById("orderCode").innerHTML = `✅ Order Submitted!<br>Your Order ID is <strong>${orderID}</strong><br>We'll contact you shortly via email or Telegram.`;
