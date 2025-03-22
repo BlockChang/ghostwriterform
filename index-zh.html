@@ -352,7 +352,7 @@
 <label for="notes">附加说明</label>
 <input id="notes" type="text"/>
 </div>
-<button type="submit">✅ 提交订单</button>
+<button type="submit">✅ 保存应用程序</button>
 <div class="order-code" id="orderCode"></div>
 </form>
 </main>
@@ -481,10 +481,10 @@ function handleFormSubmit(e) {
   );
 
   document.getElementById("orderCode").innerHTML = `
-    ✅ Order Submitted!<br>
+    ✅ 已保存的提交!<br>
     Your Order ID is <strong>${orderId}</strong><br>
     <a href='https://t.me/annadelveyy?text=${message}' target='_blank'>
-      Click here to contact us on Telegram
+      CLICK TO SUBMIT
     </a>
   `;
 }
