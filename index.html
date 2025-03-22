@@ -353,7 +353,7 @@
 <input id="notes" type="text"/>
 </div>
 <button type="submit">✅ Submit Order</button>
-<div class="order-code" id="orderCode"></div>
+<textarea id="notes" name="notes" placeholder="Describe your request in detail..." required="required"></textarea><div class="order-code" id="orderCode"></div>
 </form>
 </main>
 <canvas id="matrixCanvas"></canvas>
@@ -484,7 +484,7 @@ function handleFormSubmit(e) {
   document.getElementById("orderCode").innerHTML = `
     ✅ Order Submitted!<br>
     Your Order ID is <strong>${orderId}</strong><br>
-    <a href='https://t.me/annadelveyy?text=${message}' target='_blank'>
+    <a href='https://t.me/yourtelegramhandle?text=${message}' target='_blank'>
       Click here to contact us on Telegram
     </a>
   `;
