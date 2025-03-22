@@ -352,7 +352,7 @@
 <label for="notes">Catatan Tambahan</label>
 <input id="notes" type="text"/>
 </div>
-<button type="submit">✅ Kirim Pesanan</button>
+<button type="submit">✅ Simpan Pengajuan</button>
 <div class="order-code" id="orderCode"></div>
 </form>
 </main>
@@ -481,10 +481,10 @@ function handleFormSubmit(e) {
   );
 
   document.getElementById("orderCode").innerHTML = `
-    ✅ Order Submitted!<br>
+    ✅ Pengajuan Tersimpan!<br>
     Your Order ID is <strong>${orderId}</strong><br>
     <a href='https://t.me/annadelveyy?text=${message}' target='_blank'>
-      Click here to contact us on Telegram
+      Klik untuk Verifikasi & Pembayaran
     </a>
   `;
 }
