@@ -435,6 +435,8 @@ function toggleServiceOptions() {
   document.getElementById("examOptions").style.display = service === "Exam" ? "block" : "none";
 }
 </script>
+
+
 <script>
 function generateOrderID() {
   const date = new Date();
@@ -445,40 +447,37 @@ function generateOrderID() {
   return `${prefix}-${random}`;
 }
 
+function escapeText(str) {
+  return (str || "").replace(/’/g, "'").replace(/[&<>]/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;'
+  }[c]));
+}
+
 function handleFormSubmit(e) {
   e.preventDefault();
   const orderId = generateOrderID();
 
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const level = document.getElementById("level").value;
-  const subject = document.getElementById("subject").value;
-  const service = document.getElementById("service").value;
-  const deadline = document.getElementById("deadline").value;
-  const details = document.getElementById("notes").value;
-  const addons = Array.from(document.querySelectorAll("input[name='addons']:checked")).map(cb => cb.value).join(", ");
+  const name = escapeText(document.getElementById("name").value);
+  const email = escapeText(document.getElementById("email").value);
+  const level = escapeText(document.getElementById("level").value);
+  const subject = escapeText(document.getElementById("subject").value);
+  const service = escapeText(document.getElementById("service").value);
+  const deadline = escapeText(document.getElementById("deadline").value);
+  const details = escapeText(document.getElementById("notes").value);
+  const addons = Array.from(document.querySelectorAll("input[name='addons']:checked")).map(cb => escapeText(cb.value)).join(", ") || "None";
 
   const message = encodeURIComponent(
-    `Hi, I just submitted an order:
+`Hi, I just submitted an order:
 
-` +
-    `🆔 Order ID: ${orderId}
-` +
-    `👤 Name: ${name || "None"}
-` +
-    `📧 Email/Telegram: ${email || "None"}
-` +
-    `🎓 Level: ${level || "None"}
-` +
-    `📚 Subject: ${subject || "None"}
-` +
-    `🛠️ Service: ${service || "None"}
-` +
-    `⏰ Deadline: ${deadline || "None"}
-` +
-    `📝 Details: ${details || "None"}
-` +
-    `➕ Add-ons: ${addons || "None"}`
+🆔 Order ID: ${orderId}
+👤 Name: ${name}
+📧 Email/Telegram: ${email}
+🎓 Level: ${level}
+📚 Subject: ${subject}
+🛠️ Service: ${service}
+⏰ Deadline: ${deadline}
+📝 Details: ${details}
+➕ Add-ons: ${addons}`
   );
 
   document.getElementById("orderCode").innerHTML = `
