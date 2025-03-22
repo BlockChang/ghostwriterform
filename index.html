@@ -270,7 +270,6 @@
 <div style="text-align: center; margin-bottom: 10px;">
 <img alt="GhostWriter Logo" src="ghostwriter_logo.png" style="max-width: 250px;"/>
 </div>
-
 <p>Academic writing services | Assignment &amp; Exam Help | 100% Confidential</p>
 <div class="lang-selector">
 <label for="lang">🌐</label>
@@ -407,52 +406,6 @@
     }
     </script>
 <script>
-function generateOrderID() {
-  const date = new Date();
-  const prefix = "GW-" + date.getFullYear().toString().slice(-2) +
-                 (date.getMonth() + 1).toString().padStart(2, '0') +
-                 date.getDate().toString().padStart(2, '0');
-  const random = Math.random().toString(36).substr(2, 5).toUpperCase();
-  return `${prefix}-${random}`;
-}
-
-function handleFormSubmit(e) {
-  e.preventDefault();
-  const orderId = generateOrderID();
-
-  const payload = {
-    orderId,
-    name: document.getElementById("name").value,
-    email: document.getElementById("email").value,
-    level: document.getElementById("level").value,
-    subject: document.getElementById("subject").value,
-    service: document.getElementById("service").value,
-    deadline: document.getElementById("deadline").value,
-    details: document.getElementById("notes").value,
-    addons: Array.from(document.querySelectorAll("input[name='addons']:checked")).map(cb => cb.value)
-  };
-
-  fetch("https://script.google.com/macros/s/AKfycbyq5yXIoLBypK6Sl1JAa_yExJfkJVm7y5gtsXS-LNlZ0IOXDzAleu6DAywa74AcpPlcIQ/exec", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload)
-  }).then(res => res.text()).then(response => {
-    console.log("✅ Google Sheets response:", response);
-    document.getElementById("orderCode").innerHTML = `
-      ✅ Order Submitted!<br>
-      Your Order ID is <strong>${orderId}</strong><br>
-      We'll contact you shortly via email or Telegram.
-    `;
-  }).catch(error => {
-    console.error("❌ Submission error:", error);
-    document.getElementById("orderCode").innerText = "❌ Failed to submit your order. Please try again.";
-  });
-}
-</script>
-
-<script>
 function updateSubjectList() {
   const level = document.getElementById("level").value;
   const subjectSelect = document.getElementById("subject");
@@ -475,12 +428,66 @@ function updateSubjectList() {
   }
 }
 </script>
-
 <script>
 function toggleServiceOptions() {
   const service = document.getElementById("service").value;
   document.getElementById("assignmentOptions").style.display = service === "Assignment" ? "block" : "none";
   document.getElementById("examOptions").style.display = service === "Exam" ? "block" : "none";
+}
+</script>
+<script>
+function generateOrderID() {
+  const date = new Date();
+  const prefix = "GW-" + date.getFullYear().toString().slice(-2) +
+                 (date.getMonth() + 1).toString().padStart(2, '0') +
+                 date.getDate().toString().padStart(2, '0');
+  const random = Math.random().toString(36).substr(2, 5).toUpperCase();
+  return `${prefix}-${random}`;
+}
+
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const orderId = generateOrderID();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const level = document.getElementById("level").value;
+  const subject = document.getElementById("subject").value;
+  const service = document.getElementById("service").value;
+  const deadline = document.getElementById("deadline").value;
+  const details = document.getElementById("notes").value;
+  const addons = Array.from(document.querySelectorAll("input[name='addons']:checked")).map(cb => cb.value).join(", ");
+
+  const message = encodeURIComponent(
+    `Hi, I just submitted an order:
+
+` +
+    `🆔 Order ID: ${orderId}
+` +
+    `👤 Name: ${name}
+` +
+    `📧 Email/Telegram: ${email}
+` +
+    `🎓 Level: ${level}
+` +
+    `📚 Subject: ${subject}
+` +
+    `🛠️ Service: ${service}
+` +
+    `⏰ Deadline: ${deadline}
+` +
+    `📝 Details: ${details}
+` +
+    `➕ Add-ons: ${addons || "None"}`
+  );
+
+  document.getElementById("orderCode").innerHTML = `
+    ✅ Order Submitted!<br>
+    Your Order ID is <strong>${orderId}</strong><br>
+    <a href='https://t.me/yourtelegramhandle?text=${message}' target='_blank'>
+      Click here to contact us on Telegram
+    </a>
+  `;
 }
 </script>
 </body>
