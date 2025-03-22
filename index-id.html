@@ -464,19 +464,19 @@ function handleFormSubmit(e) {
 ` +
     `🆔 Order ID: ${orderId}
 ` +
-    `👤 Name: ${name}
+    `👤 Name: ${name || "None"}
 ` +
-    `📧 Email/Telegram: ${email}
+    `📧 Email/Telegram: ${email || "None"}
 ` +
-    `🎓 Level: ${level}
+    `🎓 Level: ${level || "None"}
 ` +
-    `📚 Subject: ${subject}
+    `📚 Subject: ${subject || "None"}
 ` +
-    `🛠️ Service: ${service}
+    `🛠️ Service: ${service || "None"}
 ` +
-    `⏰ Deadline: ${deadline}
+    `⏰ Deadline: ${deadline || "None"}
 ` +
-    `📝 Details: ${details}
+    `📝 Details: ${details || "None"}
 ` +
     `➕ Add-ons: ${addons || "None"}`
   );
